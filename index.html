@@ -8,15 +8,14 @@
 
   <style>
     :root{
-      --bg: #0b1020;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.08);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --line: rgba(255,255,255,.12);
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --radius: 22px;
-      --radius2: 16px;
+      --bg: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --card: #ffffff;
+      --shadow: 0 14px 40px rgba(2, 6, 23, 0.08);
+      --radius: 18px;
+      --radius2: 14px;
       --max: 980px;
     }
 
@@ -24,42 +23,37 @@
     html,body{ height:100%; }
     body{
       margin:0;
+      background: var(--bg);
       color: var(--text);
-      background:
-        radial-gradient(1200px 800px at 15% 15%, rgba(120, 119, 198,.45), transparent 55%),
-        radial-gradient(900px 700px at 85% 20%, rgba(56, 189, 248,.35), transparent 55%),
-        radial-gradient(900px 700px at 55% 90%, rgba(34, 197, 94,.18), transparent 55%),
-        linear-gradient(180deg, #070a14, var(--bg));
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      line-height:1.5;
+      line-height:1.55;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    a{ color: inherit; text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+    a{ color: inherit; }
+    a:hover{ opacity: .9; }
 
     .wrap{
       min-height: 100%;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:center;
-      padding: 28px 16px;
+      padding: 28px 16px 18px;
     }
 
     .shell{
       width: 100%;
       max-width: var(--max);
-      position: relative;
     }
 
+    /* Header */
     .topbar{
       display:flex;
-      align-items:center;
+      align-items:flex-end;
       justify-content:space-between;
       gap: 12px;
-      margin-bottom: 18px;
-      padding: 6px 6px;
+      margin: 8px 4px 18px;
     }
 
     .brand{
@@ -69,24 +63,21 @@
     }
 
     .logo{
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 12px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 60%),
-        linear-gradient(135deg, rgba(56,189,248,.9), rgba(120,119,198,.9));
-      box-shadow: 0 10px 30px rgba(56,189,248,.15);
-      border: 1px solid rgba(255,255,255,.16);
+      border: 1px solid var(--line);
       display:grid;
       place-items:center;
       font-size: 18px;
+      background: #f8fafc;
     }
 
     .brand h1{
       margin:0;
       font-size: 16px;
       letter-spacing: .2px;
-      font-weight: 650;
+      font-weight: 750;
     }
     .brand .tag{
       margin:0;
@@ -100,18 +91,18 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      background: #f8fafc;
       font-size: 12px;
       color: var(--muted);
       white-space: nowrap;
     }
 
+    /* Card */
     .card{
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border: 1px solid rgba(255,255,255,.14);
+      background: var(--card);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
@@ -124,17 +115,12 @@
 
     .left{
       padding: 34px 28px;
-      border-right: 1px solid rgba(255,255,255,.10);
-      position: relative;
+      border-right: 1px solid var(--line);
     }
 
     .right{
       padding: 34px 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    }
-
-    .hero{
-      max-width: 560px;
+      background: #fbfdff;
     }
 
     .kicker{
@@ -143,8 +129,8 @@
       gap: 10px;
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.12);
+      background: #f8fafc;
+      border: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
       letter-spacing: .2px;
@@ -152,22 +138,21 @@
 
     .title{
       margin: 14px 0 10px;
-      font-size: clamp(28px, 3.3vw, 44px);
-      line-height: 1.1;
-      letter-spacing: -0.6px;
-      font-weight: 780;
+      font-size: clamp(28px, 3.3vw, 42px);
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      font-weight: 820;
     }
 
     .subtitle{
       margin: 0 0 18px;
       font-size: 15px;
       color: var(--muted);
-      max-width: 54ch;
+      max-width: 58ch;
     }
 
     .points{
       display:grid;
-      grid-template-columns: 1fr;
       gap: 10px;
       margin: 18px 0 0;
     }
@@ -178,8 +163,8 @@
       gap: 10px;
       padding: 12px 12px;
       border-radius: var(--radius2);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .icon{
@@ -188,8 +173,8 @@
       border-radius: 12px;
       display:grid;
       place-items:center;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
+      background: #f8fafc;
+      border: 1px solid var(--line);
       flex: 0 0 auto;
     }
 
@@ -208,8 +193,8 @@
       margin: 0 0 12px;
       font-size: 14px;
       letter-spacing: .2px;
-      color: rgba(255,255,255,.86);
-      font-weight: 650;
+      color: var(--text);
+      font-weight: 750;
     }
 
     .steps{
@@ -226,8 +211,8 @@
       align-items:flex-start;
       padding: 12px 12px;
       border-radius: var(--radius2);
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
+      background: #ffffff;
+      border: 1px solid var(--line);
     }
 
     .num{
@@ -236,10 +221,11 @@
       display:grid;
       place-items:center;
       font-size: 12px;
-      background: rgba(56,189,248,.14);
-      border: 1px solid rgba(56,189,248,.28);
-      color: rgba(255,255,255,.92);
+      background: #eef2ff;
+      border: 1px solid #e0e7ff;
+      color: #1e293b;
       flex: 0 0 auto;
+      font-weight: 700;
     }
 
     .stepText{
@@ -251,37 +237,37 @@
     .contact{
       margin-top: 18px;
       padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,.10);
+      border-top: 1px solid var(--line);
       font-size: 13px;
       color: var(--muted);
     }
 
     .contact a{
-      color: rgba(255,255,255,.9);
+      color: #0f172a;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
+    /* Footer */
     .footer{
-      margin-top: 14px;
+      margin-top: 18px;
+      padding: 14px 6px 6px;
+      border-top: 1px solid var(--line);
       display:flex;
       justify-content:space-between;
       gap: 12px;
       flex-wrap: wrap;
-      color: rgba(255,255,255,.45);
+      color: #64748b;
       font-size: 12px;
-      padding: 0 6px;
     }
 
     /* Mobile */
     @media (max-width: 860px){
       .grid{ grid-template-columns: 1fr; }
-      .left{ border-right: none; border-bottom: 1px solid rgba(255,255,255,.10); }
-      .hero{ max-width: 100%; }
+      .left{ border-right: none; border-bottom: 1px solid var(--line); }
     }
     @media (max-width: 480px){
       .left,.right{ padding: 22px 16px; }
-      .title{ letter-spacing: -0.3px; }
       .pill{ display:none; }
     }
   </style>
@@ -307,35 +293,33 @@
         <div class="grid">
 
           <section class="left">
-            <div class="hero">
-              <div class="kicker">📩 Email alerts for new rentals</div>
-              <h2 class="title">New rental listings — without the noise.</h2>
-              <p class="subtitle">
-                We send simple emails when new rental listings appear in Perth (WA).
-                Just a link you can open and act on.
-              </p>
+            <div class="kicker">📩 Email alerts for new rentals</div>
+            <h2 class="title">New rentals, sent like a mate would.</h2>
+            <p class="subtitle">
+              If a fresh listing pops up in Perth, we’ll shoot you a quick email.
+              No long write-ups — just the link so you can move.
+            </p>
 
-              <div class="points">
-                <div class="point">
-                  <div class="icon">⚡️</div>
-                  <div>
-                    <b>Quick heads-up</b>
-                    <span>Get a clean email when something new pops up.</span>
-                  </div>
+            <div class="points">
+              <div class="point">
+                <div class="icon">⚡️</div>
+                <div>
+                  <b>Quick heads-up</b>
+                  <span>A short email when something new appears.</span>
                 </div>
-                <div class="point">
-                  <div class="icon">🧾</div>
-                  <div>
-                    <b>Minimal + clear</b>
-                    <span>One link. One purpose. Easy to scan on mobile.</span>
-                  </div>
+              </div>
+              <div class="point">
+                <div class="icon">🧾</div>
+                <div>
+                  <b>Easy to scan</b>
+                  <span>Works well on mobile — open, tap, done.</span>
                 </div>
-                <div class="point">
-                  <div class="icon">🎯</div>
-                  <div>
-                    <b>Perth-focused</b>
-                    <span>Built for Perth renters who want to move fast.</span>
-                  </div>
+              </div>
+              <div class="point">
+                <div class="icon">🎯</div>
+                <div>
+                  <b>Perth-only focus</b>
+                  <span>Built for renters who want to move fast in WA.</span>
                 </div>
               </div>
             </div>
@@ -346,15 +330,15 @@
             <ul class="steps">
               <li class="step">
                 <div class="num">1</div>
-                <div class="stepText">Choose an area + budget (e.g. Perth / under $1,000).</div>
+                <div class="stepText">Pick an area + budget (e.g. Perth / under $1,000).</div>
               </li>
               <li class="step">
                 <div class="num">2</div>
-                <div class="stepText">We watch for new listings that match.</div>
+                <div class="stepText">We check for new listings that match.</div>
               </li>
               <li class="step">
                 <div class="num">3</div>
-                <div class="stepText">You get an email with the link. Open it and apply.</div>
+                <div class="stepText">You get a short email with the link. Easy.</div>
               </li>
             </ul>
 
@@ -368,7 +352,7 @@
 
       <div class="footer">
         <div>© <span id="y"></span> Perth Alerts</div>
-        <div>Built for Perth renters</div>
+        <div>Made for Perth renters</div>
       </div>
 
     </div>
