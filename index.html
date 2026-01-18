@@ -4,22 +4,378 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Perth Alerts</title>
+  <meta name="description" content="Simple email alerts when new rental listings appear in Perth (WA)." />
+
+  <style>
+    :root{
+      --bg: #0b1020;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --line: rgba(255,255,255,.12);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 980px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 15%, rgba(120, 119, 198,.45), transparent 55%),
+        radial-gradient(900px 700px at 85% 20%, rgba(56, 189, 248,.35), transparent 55%),
+        radial-gradient(900px 700px at 55% 90%, rgba(34, 197, 94,.18), transparent 55%),
+        linear-gradient(180deg, #070a14, var(--bg));
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      line-height:1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .wrap{
+      min-height: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 28px 16px;
+    }
+
+    .shell{
+      width: 100%;
+      max-width: var(--max);
+      position: relative;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding: 6px 6px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .logo{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 60%),
+        linear-gradient(135deg, rgba(56,189,248,.9), rgba(120,119,198,.9));
+      box-shadow: 0 10px 30px rgba(56,189,248,.15);
+      border: 1px solid rgba(255,255,255,.16);
+      display:grid;
+      place-items:center;
+      font-size: 18px;
+    }
+
+    .brand h1{
+      margin:0;
+      font-size: 16px;
+      letter-spacing: .2px;
+      font-weight: 650;
+    }
+    .brand .tag{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 0;
+    }
+
+    .left{
+      padding: 34px 28px;
+      border-right: 1px solid rgba(255,255,255,.10);
+      position: relative;
+    }
+
+    .right{
+      padding: 34px 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+
+    .hero{
+      max-width: 560px;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+
+    .title{
+      margin: 14px 0 10px;
+      font-size: clamp(28px, 3.3vw, 44px);
+      line-height: 1.1;
+      letter-spacing: -0.6px;
+      font-weight: 780;
+    }
+
+    .subtitle{
+      margin: 0 0 18px;
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 54ch;
+    }
+
+    .points{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 18px 0 0;
+    }
+
+    .point{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+      padding: 12px 12px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .icon{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      flex: 0 0 auto;
+    }
+
+    .point b{
+      display:block;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+    .point span{
+      display:block;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .panelTitle{
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: .2px;
+      color: rgba(255,255,255,.86);
+      font-weight: 650;
+    }
+
+    .steps{
+      display:grid;
+      gap: 10px;
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step{
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      padding: 12px 12px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .num{
+      width: 26px; height: 26px;
+      border-radius: 999px;
+      display:grid;
+      place-items:center;
+      font-size: 12px;
+      background: rgba(56,189,248,.14);
+      border: 1px solid rgba(56,189,248,.28);
+      color: rgba(255,255,255,.92);
+      flex: 0 0 auto;
+    }
+
+    .stepText{
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .contact{
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .contact a{
+      color: rgba(255,255,255,.9);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer{
+      margin-top: 14px;
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,.45);
+      font-size: 12px;
+      padding: 0 6px;
+    }
+
+    /* Mobile */
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .left{ border-right: none; border-bottom: 1px solid rgba(255,255,255,.10); }
+      .hero{ max-width: 100%; }
+    }
+    @media (max-width: 480px){
+      .left,.right{ padding: 22px 16px; }
+      .title{ letter-spacing: -0.3px; }
+      .pill{ display:none; }
+    }
+  </style>
 </head>
-<body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 720px; margin: 48px auto; padding: 0 16px; line-height: 1.5;">
-  <h1 style="margin: 0 0 12px;">Perth Alerts</h1>
-  <p style="margin: 0 0 16px;">
-    Simple email alerts when new rental listings appear in Perth (WA).
-  </p>
 
-  <h2 style="font-size: 18px; margin: 24px 0 8px;">How it works</h2>
-  <ul style="margin: 0 0 16px; padding-left: 18px;">
-    <li>Choose an area + budget</li>
-    <li>We email you when something new pops up</li>
-    <li>Open the link and apply</li>
-  </ul>
+<body>
+  <div class="wrap">
+    <div class="shell">
 
-  <p style="margin: 24px 0 0;">
-    Contact: <a href="mailto:r.business.services0@gmail.com">r.business.services0@gmail.com</a>
-  </p>
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo">🏡</div>
+          <div>
+            <h1>Perth Alerts</h1>
+            <p class="tag">Rental listings • Perth (WA)</p>
+          </div>
+        </div>
+
+        <div class="pill">Simple. Fast. Email-first.</div>
+      </div>
+
+      <main class="card">
+        <div class="grid">
+
+          <section class="left">
+            <div class="hero">
+              <div class="kicker">📩 Email alerts for new rentals</div>
+              <h2 class="title">New rental listings — without the noise.</h2>
+              <p class="subtitle">
+                We send simple emails when new rental listings appear in Perth (WA).
+                Just a link you can open and act on.
+              </p>
+
+              <div class="points">
+                <div class="point">
+                  <div class="icon">⚡️</div>
+                  <div>
+                    <b>Quick heads-up</b>
+                    <span>Get a clean email when something new pops up.</span>
+                  </div>
+                </div>
+                <div class="point">
+                  <div class="icon">🧾</div>
+                  <div>
+                    <b>Minimal + clear</b>
+                    <span>One link. One purpose. Easy to scan on mobile.</span>
+                  </div>
+                </div>
+                <div class="point">
+                  <div class="icon">🎯</div>
+                  <div>
+                    <b>Perth-focused</b>
+                    <span>Built for Perth renters who want to move fast.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="right">
+            <h3 class="panelTitle">How it works</h3>
+            <ul class="steps">
+              <li class="step">
+                <div class="num">1</div>
+                <div class="stepText">Choose an area + budget (e.g. Perth / under $1,000).</div>
+              </li>
+              <li class="step">
+                <div class="num">2</div>
+                <div class="stepText">We watch for new listings that match.</div>
+              </li>
+              <li class="step">
+                <div class="num">3</div>
+                <div class="stepText">You get an email with the link. Open it and apply.</div>
+              </li>
+            </ul>
+
+            <div class="contact">
+              Contact: <a href="mailto:r.business.services0@gmail.com">r.business.services0@gmail.com</a>
+            </div>
+          </aside>
+
+        </div>
+      </main>
+
+      <div class="footer">
+        <div>© <span id="y"></span> Perth Alerts</div>
+        <div>Built for Perth renters</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
